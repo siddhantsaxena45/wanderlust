@@ -1,0 +1,35 @@
+<% layout('/layouts/boilerplate') -%>
+
+ <body>
+      <div class="box m-3">
+         
+         <div class="card show">
+         <h2>Listing Details</h2>
+               <img src=" <%= showlist.image.url %>" class="card-img-top show" alt="<%= showlist.image.filename %>">
+               <div class="card-body show" >
+                  <h4 >
+                     <%= showlist.title %>
+                  </h5>
+                  <p>
+                     <%= showlist.description %>
+                  </p>
+
+                  <p >  &#8377 <%= showlist.price ? Number(showlist.price).toLocaleString("en-IN") : "N/A" %> / night
+                  </p>
+                  <p >
+                     <%= showlist.country %>
+                  </p>
+                  <p >
+                     <%= showlist.location %>
+                  </p>
+                  <div class="buttons"><a href="/listings/<%= showlist._id %>/edit" class="btn btn-dark edit-btn">edit</a>
+                     
+                     <form action="/listings/<%= showlist._id %>?_method=DELETE" method="post">
+                        <button class="btn btn-dark">delete</button>
+                     </form></div>
+                  
+               </div>
+            </div>
+         </div>
+      </div>
+ </body>
