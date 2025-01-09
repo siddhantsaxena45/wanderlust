@@ -64,7 +64,7 @@ app.get("/listings/:id/edit", wrapAsync(async (req, res) => {
     const showlist = await Listing.findById(id);
     res.render("listings/edit", { showlist });
 }))
-app.put("/listings/:id",,validatelisting,wrapAsync( async (req, res) => {
+app.put("/listings/:id",validatelisting,wrapAsync( async (req, res) => {
     
     const { id } = req.params;
     await Listing.findByIdAndUpdate(id, { ...req.body.listing });
