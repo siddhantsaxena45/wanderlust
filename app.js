@@ -5,7 +5,7 @@ const Listing = require("./models/listing");
 const path = require("path");
 const methodOverride = require('method-override');
 const ejsmate = require("ejs-mate");
-
+const wrapAsync=require("./utils/wrapAsync")
 const mongo_url = "mongodb://127.0.0.1:27017/wanderlust";
 async function main() {
     await mongoose.connect(mongo_url);
