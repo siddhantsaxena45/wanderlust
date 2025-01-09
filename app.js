@@ -40,16 +40,14 @@ app.get("/listings/:id", async (req, res) => {
     res.render("listings/show.ejs", { showlist });
 })
 
-app.post("/listings", async (req, res, next) => {
-    try {
+app.post("/listings", warapAsync(async (req, res, next) => {
+    
         console.log(req.body.Listing);
         const listing = new Listing(req.body.Listing);
         await listing.save();
         res.redirect("/listings");
-    } catch (err) {
-        next(err);
-    }
-})
+   
+}));
 app.get("/listings/:id/edit", async (req, res) => {
     const { id } = req.params;
     const showlist = await Listing.findById(id);
