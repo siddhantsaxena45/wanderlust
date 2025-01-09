@@ -40,7 +40,7 @@ app.get("/listings/:id", async (req, res) => {
     res.render("listings/show.ejs", { showlist });
 })
 
-app.post("/listings", warapAsync(async (req, res, next) => {
+app.post("/listings", wrapAsync(async (req, res, next) => {
     
         console.log(req.body.Listing);
         const listing = new Listing(req.body.Listing);
