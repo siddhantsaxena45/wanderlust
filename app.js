@@ -27,20 +27,20 @@ app.get("/", (req, res) => {
     res.redirect("listings");
 })
 
-app.get("/listings", async (req, res) => {
+app.get("/listings", wrapAsync(async (req, res) => {
     const allListings = await Listing.find({});
     res.render("listings/index.ejs", { allListings });
-})
+}))
 
-app.get("/listings/new", (req, res) => {
+app.get("/listings/new",wrapAsync( (req, res) => {
     res.render("listings/new");
-})
+}))
 
-app.get("/listings/:id", async (req, res) => {
+app.get("/listings/:id", wrapAsync(async (req, res) => {
     const { id } = req.params;
     const showlist = await Listing.findById(id);
     res.render("listings/show.ejs", { showlist });
-})
+}))
 
 app.post("/listings", wrapAsync(async (req, res, next) => {
     
@@ -50,11 +50,11 @@ app.post("/listings", wrapAsync(async (req, res, next) => {
         res.redirect("/listings");
    
 }));
-app.get("/listings/:id/edit", async (req, res) => {
+app.get("/listings/:id/edit", wrapAsync(async (req, res) => {
     const { id } = req.params;
     const showlist = await Listing.findById(id);
     res.render("listings/edit", { showlist });
-})
+}))
 app.put("/listings/:id", async (req, res) => {
     const { id } = req.params;
     await Listing.findByIdAndUpdate(id, { ...req.body.listing });
