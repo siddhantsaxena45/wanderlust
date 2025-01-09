@@ -6,8 +6,10 @@ const path = require("path");
 const methodOverride = require('method-override');
 const ejsmate = require("ejs-mate");
 const wrapAsync=require("./utils/wrapAsync")
-const expressError=require("./utils/expressError");
+
+const {listingschema}=require("./schema")
 const ExpressError = require("./utils/expressError");
+ 
 const mongo_url = "mongodb://127.0.0.1:27017/wanderlust";
 async function main() {
     await mongoose.connect(mongo_url);
@@ -23,6 +25,16 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'))
+
+const validateListing=(req,res,next)=>{
+ let {error}=listingschema.validate(req.body);
+ if(error){
+    throw new ExpressError(400,error);
+ }
+ else{
+    next();
+ }
+}
 app.get("/", (req, res) => {
     res.redirect("listings");
 })
@@ -42,12 +54,8 @@ app.get("/listings/:id", wrapAsync(async (req, res) => {
     res.render("listings/show.ejs", { showlist });
 }))
 
-app.post("/listings", wrapAsync(async (req, res, next) => {
-    if(!req.body.Listing){
-        throw new ExpressError(400,"send valid data for listing");
-    }
-        console.log(req.body.Listing);
-        const listing = new Listing(req.body.Listing);
+app.post("/listings",validateListing, wrapAsync(async (req, res, next) => {
+        const listing = new Listing(...req.body.Listing);
         await listing.save();
         res.redirect("/listings");   
 }));
@@ -56,10 +64,8 @@ app.get("/listings/:id/edit", wrapAsync(async (req, res) => {
     const showlist = await Listing.findById(id);
     res.render("listings/edit", { showlist });
 }))
-app.put("/listings/:id",wrapAsync( async (req, res) => {
-    if(!req.body.Listing){
-        throw new ExpressError(400,"send valid data for listing");
-    }
+app.put("/listings/:id",,validatelisting,wrapAsync( async (req, res) => {
+    
     const { id } = req.params;
     await Listing.findByIdAndUpdate(id, { ...req.body.listing });
     res.redirect(`/listings/${id}`);
