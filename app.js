@@ -6,6 +6,8 @@ const path = require("path");
 const methodOverride = require('method-override');
 const ejsmate = require("ejs-mate");
 const wrapAsync=require("./utils/wrapAsync")
+const expressError=require("./utils/expressError");
+const ExpressError = require("./utils/expressError");
 const mongo_url = "mongodb://127.0.0.1:27017/wanderlust";
 async function main() {
     await mongoose.connect(mongo_url);
@@ -63,8 +65,12 @@ app.delete("/listings/:id", async (req, res) => {
     await Listing.findByIdAndDelete(id);
     res.redirect("/listings");
 })
+app.all("*",(req,res,next)=>{
+    next(new ExpressError(404,"page not found!"));
+})
 app.use((err, req, res, next) => {
-    res.send("something went wrong");
+    let{statusCode=500,message="something went wrong"}=err;
+    res.status(statusCode).send(message);
 })
 // app.get("/testsample",async (req,res)=>{
 //     const list = new Listing({
