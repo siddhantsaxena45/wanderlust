@@ -27,7 +27,7 @@ body{
     align-items: center;
     justify-content: center;
     height: 8rem;
-    background-color: rgb(255, 255, 255);
+    background-color: #ff355a9f;
 }
 .info{
     display: flex;
@@ -58,11 +58,12 @@ body{
   opacity: 0.2;
   background-color: white;
 }
-.card{
+.noborder{
     border: none;
     width: 18rem;
     object-fit: cover;
 }
+
 
 .box{
     display: flex;

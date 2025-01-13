@@ -8,6 +8,7 @@ const methodOverride = require('method-override');
 const ejsmate = require("ejs-mate");
 const wrapAsync=require("./utils/wrapAsync");
 const {listingschema}=require("./schema");
+const {reviewschema}=require("./schema");
 const ExpressError = require("./utils/expressError");
 
 const mongo_url = "mongodb://127.0.0.1:27017/wanderlust";
@@ -27,8 +28,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'))
 
 const validateListing = (req, res, next) => {
-    console.log("Incoming request body:", req.body);
+    // console.log("Incoming request body:", req.body);
     let { error } = listingschema.validate(req.body);
+    if (error) {
+        let errmsg = error.details.map(el => el.message).join(",");
+        throw new ExpressError(400, errmsg);
+    } else {
+        next();
+    }
+};
+const validateReview = (req, res, next) => {
+    // console.log("Incoming request body:", req.body);
+    let { error } = reviewschema.validate(req.body);
     if (error) {
         let errmsg = error.details.map(el => el.message).join(",");
         throw new ExpressError(400, errmsg);
@@ -52,7 +63,7 @@ app.get("/listings/new",wrapAsync(async (req, res) => {
 
 app.get("/listings/:id", wrapAsync(async (req, res) => {
     const { id } = req.params;
-    const showlist = await Listing.findById(id);
+    const showlist = await Listing.findById(id).populate("reviews");
     res.render("listings/show.ejs", { showlist });
 }))
 
@@ -77,8 +88,13 @@ app.delete("/listings/:id", wrapAsync(async (req, res) => {
     await Listing.findByIdAndDelete(id);
     res.redirect("/listings");
 }))
-app.post("/listings/:id/review",wrapAsync(async(req,res)=>{
-   
+app.delete("/listings/:id/review/:reviewid", wrapAsync(async (req, res) => {
+    const { id,reviewid } = req.params;
+    await Listing.findByIdAndUpdate(id,{$pull:{reviews:reviewid}});
+   await Review.findByIdAndDelete(reviewid);
+    res.redirect(`/listings/${id}`);
+}))
+app.post("/listings/:id/review",validateReview,wrapAsync(async(req,res)=>{ 
     const listing = await Listing.findById(req.params.id);
     const newreview = new Review(req.body.review);
     listing.reviews.push(newreview);
