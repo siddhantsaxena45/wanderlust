@@ -35,15 +35,15 @@
       <hr class="col-8 offset-2">
       <div class="col-8 offset-2 mb-3">
          <h3>Leave a review</h3>
-         <form>
+         <form method="post" action="/listings/<%= showlist._id %>/review">
             <div class="mb-3">
                <label for="rating" class="form-label">Rating</label>
-               <input type="range" min="1" max="5" class="form-range" id="rating" name="review[rating]">
+               <input type="range" min="1" max="5" class="form-range" id="rating" name="review[rating]" required>
 
             </div>
             <div class="mb-3">
                <label for="comment" class="form-label">Comment</label>
-               <textarea class="form-control" id="comment" name="review[comment]" cols="20" rows="6"></textarea>
+               <textarea class="form-control" id="comment" name="review[comment]" cols="20" rows="6" required></textarea>
             </div>
 
             <button type="submit" class="btn btn-outline-dark">Submit</button>
