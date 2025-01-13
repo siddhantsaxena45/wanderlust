@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-
-const listingSchema = new mongoose.Schema({
+const Schema=mongoose.Schema;
+const listingSchema = new Schema({
     title: { type: String, required: true },
     description: { type: String , required: true},
     image: {
@@ -16,7 +16,8 @@ const listingSchema = new mongoose.Schema({
     },
     price: { type: Number, min: [0, "Price must be a positive value"], default: 0 },
     location: { type: String,required: true },
-    country: { type: String,required: true }
+    country: { type: String,required: true },
+    reviews: [{ type: Schema.Types.ObjectId, ref: 'Review' }]
 });
 
 const Listing = mongoose.model("Listing", listingSchema);
