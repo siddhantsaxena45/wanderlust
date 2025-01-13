@@ -43,14 +43,15 @@
                         <input
                             type="text"
                             class="form-control"
-                            name="listing[image.url]"
+                            name="listing[image][url]"
                             value="<%= showlist.image.url %>"
                             id="Image"
-                            placeholder="Paste image URL" required
+                            placeholder="Paste image URL"
+                            required
                         />
                         <div class="invalid-feedback">
-                           please enter valid image link
-                          </div>
+                            Please enter a valid image link.
+                        </div>
                     </div>
                     <div class="row">
                         <div class="mb-3 col-md-4">

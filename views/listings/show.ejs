@@ -1,33 +1,52 @@
 <% layout('/layouts/boilerplate') -%>
 
- <body>
+   <body>
       <div class="box m-3">
-         
-         <div class="card show">
-         <h2> <%= showlist.title %></h2>
-               <img src=" <%= showlist.image.url %>" class="card-img-top show" alt="<%= showlist.image.filename %>">
-               <div class="card-body show" >
-                 
-                  <p>
-                     <%= showlist.description %>
-                  </p>
 
-                  <p >  &#8377 <%= showlist.price ? Number(showlist.price).toLocaleString("en-IN") : "N/A" %> / night
-                  </p>
-                  <p >
-                     <%= showlist.country %>
-                  </p>
-                  <p >
-                     <%= showlist.location %>
-                  </p>
-                  <div class="buttons"><a href="/listings/<%= showlist._id %>/edit" class="btn btn-dark edit-btn">edit</a>
-                     
-                     <form action="/listings/<%= showlist._id %>?_method=DELETE" method="post">
-                        <button class="btn btn-dark">delete</button>
-                     </form></div>
-                  
+         <div class="card show">
+            <h2>
+               <%= showlist.title %>
+            </h2>
+            <img src=" <%= showlist.image.url %>" class="card-img-top show" alt="<%= showlist.image.filename %>">
+            <div class="card-body show">
+
+               <p>
+                  <%= showlist.description %>
+               </p>
+
+               <p> &#8377 <%= showlist.price ? Number(showlist.price).toLocaleString("en-IN") : "N/A" %> / night
+               </p>
+               <p>
+                  <%= showlist.country %>
+               </p>
+               <p>
+                  <%= showlist.location %>
+               </p>
+               <div class="buttons"><a href="/listings/<%= showlist._id %>/edit" class="btn btn-dark edit-btn">edit</a>
+
+                  <form action="/listings/<%= showlist._id %>?_method=DELETE" method="post">
+                     <button class="btn btn-dark">delete</button>
+                  </form>
                </div>
+
             </div>
          </div>
       </div>
- </body>
+      <hr class="col-8 offset-2">
+      <div class="col-8 offset-2 mb-3">
+         <h3>Leave a review</h3>
+         <form>
+            <div class="mb-3">
+               <label for="rating" class="form-label">Rating</label>
+               <input type="range" min="1" max="5" class="form-range" id="rating" name="review[rating]">
+
+            </div>
+            <div class="mb-3">
+               <label for="comment" class="form-label">Comment</label>
+               <textarea class="form-control" id="comment" name="review[comment]" cols="20" rows="6"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-outline-dark">Submit</button>
+         </form>
+      </div>
+   </body>

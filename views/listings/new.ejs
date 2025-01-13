@@ -10,7 +10,7 @@
                     <form action="/listings" method="post" class="needs-validation" novalidate>
                         <div class="mb-3">
                             <label class="form-label" for="Title">Title</label>
-                            <input type="text" class="form-control" name="Listing[title]" placeholder="Enter title"
+                            <input type="text" class="form-control" name="listing[title]" placeholder="Enter title"
                                 id="Title" required>
                                 <div class="valid-feedback">
                                     Looks good!
@@ -21,7 +21,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="Description">Description</label>
-                            <textarea class="form-control" name="Listing[description]" placeholder="Enter description"
+                            <textarea class="form-control" name="listing[description]" placeholder="Enter description"
                                 id="Description" required></textarea>
                                 <div class="invalid-feedback">
                                     Please enter valid description
@@ -29,13 +29,13 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="Image">Image</label>
-                            <input type="text" class="form-control" name="Listing[image.url]"
+                            <input type="text" class="form-control" name="listing[image][url]"
                                 placeholder="Paste image URL" id="Image">
                         </div>
                         <div class="row">
                             <div class="mb-3 col-md-4">
                                 <label class="form-label" for="Price">Price</label>
-                                <input type="text" class="form-control" name="Listing[price]"
+                                <input type="text" class="form-control" name="listing[price]"
                                     placeholder="Enter price" id="Price" required>
                                     <div class="invalid-feedback">
                                         Please enter valid price
@@ -43,7 +43,7 @@
                             </div>
                             <div class="mb-3 col-md-8">
                                 <label class="form-label" for="Country">Country</label>
-                                <input type="text" class="form-control" name="Listing[country]"
+                                <input type="text" class="form-control" name="listing[country]"
                                     placeholder="Enter country" id="Country" required>
                                     <div class="invalid-feedback">
                                         Please enter a valid country
@@ -52,7 +52,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="Location">Location</label>
-                            <input type="text" class="form-control" name="Listing[location]"
+                            <input type="text" class="form-control" name="listing[location]"
                                 placeholder="Enter location" id="Location" required>
                                 <div class="invalid-feedback">
                                     please enter valid location
