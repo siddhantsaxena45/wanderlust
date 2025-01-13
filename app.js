@@ -26,16 +26,16 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'))
 
-const validateListing=(req,res,next)=>{
- let {error}=listingschema.validate(req.body);
- if(error){
-    let errmsg=error.details.map((el)=>{el.message}).join(",");
-    throw new ExpressError(400,errmsg);
- }
- else{
-    next();
- }
-}
+const validateListing = (req, res, next) => {
+    let { error } = listingschema.validate(req.body);
+    if (error) {
+        let errmsg = error.details.map(el => el.message).join(",");
+        throw new ExpressError(400, errmsg);
+    } else {
+        next();
+    }
+};
+
 app.get("/", (req, res) => {
     res.redirect("listings");
 })
@@ -84,6 +84,7 @@ app.use((err, req, res, next) => {
         return next(err);
     }
     let{statusCode=500,message="something went wrong"}=err;
+    console.log(err);
     res.status(statusCode).render("error.ejs",{message});
     // res.status(statusCode).send(message);
 
