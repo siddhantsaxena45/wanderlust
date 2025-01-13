@@ -29,7 +29,8 @@ app.use(methodOverride('_method'))
 const validateListing=(req,res,next)=>{
  let {error}=listingschema.validate(req.body);
  if(error){
-    throw new ExpressError(400,error);
+    let errmsg=error.details.map((el)=>{el.message}).join(",");
+    throw new ExpressError(400,errmsg);
  }
  else{
     next();
