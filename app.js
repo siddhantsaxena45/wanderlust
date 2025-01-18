@@ -4,11 +4,11 @@ const mongoose = require("mongoose");
 const path = require("path");
 const methodOverride = require('method-override');
 const ejsmate = require("ejs-mate");
-const wrapAsync=require("./utils/wrapAsync");
+const wrapAsync = require("./utils/wrapAsync");
 const ExpressError = require("./utils/expressError");
-const listings=require("./routes/listings");
-const Reviews=require("./routes/reviews");
-
+const listings = require("./routes/listings");
+const Reviews = require("./routes/reviews");
+const session = require("express-session");
 const mongo_url = "mongodb://127.0.0.1:27017/wanderlust";
 async function main() {
     await mongoose.connect(mongo_url);
@@ -25,25 +25,35 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'))
 
-app.use("/listings",listings);
-app.use("/listings/:id/review",Reviews);
+const sessionOptions = {
+    secret: "mysupersecretcode",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        httpOnly: true
+    }
+}
+app.use(session(sessionOptions));
 
-app.get("/",wrapAsync(async (req, res) => {
+app.use("/listings", listings);
+app.use("/listings/:id/review", Reviews);
+
+app.get("/", wrapAsync(async (req, res) => {
     res.redirect("listings");
 }))
 
-
-app.all("*",(req,res,next)=>{
-    next(new ExpressError(404,"page not found!"));
+app.all("*", (req, res, next) => {
+    next(new ExpressError(404, "page not found!"));
 })
 app.use((err, req, res, next) => {
     if (res.headersSent) {
         return next(err);
     }
-    let{statusCode=500,message="something went wrong"}=err;
+    let { statusCode = 500, message = "something went wrong" } = err;
     console.log(err);
-    res.status(statusCode).render("error.ejs",{message});
-    
+    res.status(statusCode).render("error.ejs", { message });
 })
 
 const port = 8080;
