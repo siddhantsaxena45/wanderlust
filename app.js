@@ -9,6 +9,8 @@ const ExpressError = require("./utils/expressError");
 const listings = require("./routes/listings");
 const Reviews = require("./routes/reviews");
 const session = require("express-session");
+const flash = require("connect-flash");
+
 const mongo_url = "mongodb://127.0.0.1:27017/wanderlust";
 async function main() {
     await mongoose.connect(mongo_url);
@@ -35,14 +37,20 @@ const sessionOptions = {
         httpOnly: true
     }
 }
-app.use(session(sessionOptions));
-
-app.use("/listings", listings);
-app.use("/listings/:id/review", Reviews);
 
 app.get("/", wrapAsync(async (req, res) => {
     res.redirect("listings");
 }))
+
+app.use(session(sessionOptions));
+app.use(flash());
+app.use((req,res,next)=>{
+    res.locals.success=req.flash("success");
+    next();
+})
+
+app.use("/listings", listings);
+app.use("/listings/:id/review", Reviews);
 
 app.all("*", (req, res, next) => {
     next(new ExpressError(404, "page not found!"));
