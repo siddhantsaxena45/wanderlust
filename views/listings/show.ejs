@@ -9,7 +9,9 @@
             </h2>
             <img src=" <%= showlist.image.url %>" class="card-img-top show" alt="<%= showlist.image.filename %>">
             <div class="card-body show">
-
+               <p>
+                 owned by : <i><%= showlist.owner.username %></i>  
+               </p>
                <p>
                   <%= showlist.description %>
                </p>
@@ -61,7 +63,7 @@
                <div class="col-8 offset-2 offset-md-0 col-md-6 mb-3">
                   <div class="card">
                      <div class="card-body p-2">
-                        <h5 class="card-title"><%= review.username %></h5>
+                        <h5 class="card-title">User</h5>
                         <h6 class="card-text">
                            <%= review.rating %> stars
                         </h6>

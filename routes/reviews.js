@@ -6,6 +6,7 @@ const ExpressError = require("../utils/expressError");
 const Review = require("../models/review");
 const Listing = require("../models/listing");
 const { reviewschema } = require("../schema");
+const { isloggedin } = require("../middleware");
 
 const validateReview = (req, res, next) => {
     let { error } = reviewschema.validate(req.body);
@@ -20,7 +21,7 @@ const validateReview = (req, res, next) => {
 router.post("/", validateReview, wrapAsync(async (req, res) => {
     const listing = await Listing.findById(req.params.id);
     const newreview = new Review(req.body.review);
-    newreview.username = req.user.username;
+   
     listing.reviews.push(newreview);
     await newreview.save();
     await listing.save();
