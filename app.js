@@ -6,14 +6,18 @@ const methodOverride = require('method-override');
 const ejsmate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync");
 const ExpressError = require("./utils/expressError");
-const listingRouter = require("./routes/listings");
-const reviewRouter = require("./routes/reviews");
 const userRouter = require("./routes/user");
+const reviewRouter = require("./routes/reviews");
+const listingRouter = require("./routes/listings");
 const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User=require("./models/user");
+
+app.use(express.static(path.join(__dirname, "public")));
+app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride('_method'))
 
 const mongo_url = "mongodb://127.0.0.1:27017/wanderlust";
 async function main() {
@@ -27,9 +31,7 @@ main().then(() => {
 app.engine('ejs', ejsmate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
-app.use(express.static(path.join(__dirname, "public")));
-app.use(express.urlencoded({ extended: true }));
-app.use(methodOverride('_method'))
+
 
 const sessionOptions = {
     secret: "mysupersecretcode",
@@ -60,9 +62,9 @@ app.use((req,res,next)=>{
     next();
 })
 
+app.use("/",userRouter );
 app.use("/listings", listingRouter);
 app.use("/listings/:id/review", reviewRouter);
-app.use("/",userRouter );
 
 app.all("*", (req, res, next) => {
     next(new ExpressError(404, "page not found!"));
