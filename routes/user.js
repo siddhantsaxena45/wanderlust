@@ -31,7 +31,7 @@ router.post("/signup", wrapAsync(async (req, res) => {
 router.get("/login", (req, res) => {
     res.render("users/login.ejs");
 })
-router.post("/login",savedUrl, passport.authenticate("local", { failureRedirect: '/login', failureFlash: true }), async (req, res) => {
+router.post("/login", savedUrl, passport.authenticate("local", { failureRedirect: '/login', failureFlash: true }), async (req, res) => {
     req.flash("success", `Welcome back ${req.user.username} to wanderlust!`);
     res.redirect(res.locals.redirect || "/listings");
 })

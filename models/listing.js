@@ -18,7 +18,8 @@ const listingSchema = new Schema({
     price: { type: Number, min: [0, "Price must be a positive value"], default: 0 },
     location: { type: String,required: true },
     country: { type: String,required: true },
-    reviews: [{ type: Schema.Types.ObjectId, ref: 'Review' }]
+    reviews: [{ type: Schema.Types.ObjectId, ref: 'Review' }],
+    owner: [{ type: Schema.Types.ObjectId, ref: 'User' }]
 });
 listingSchema.post("findOneAndDelete",async(listing)=>{
     if(listing){
