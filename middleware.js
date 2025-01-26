@@ -1,7 +1,9 @@
 const Listing = require("./models/listing");
+const Review = require("./models/review");
 const ExpressError = require("./utils/expressError");
 const { listingschema } = require("./schema");
 const { reviewschema } = require("./schema");
+
 
 
 module.exports.isloggedin = (req, res, next) => {
@@ -25,6 +27,16 @@ module.exports.isOwner =async (req, res, next) => {
     const listing =await Listing.findById(id);
     if (!listing.owner.equals(res.locals.currentUser._id)) {
         req.flash("error", "You don't have permission to do that!");
+        return res.redirect(`/listings/${id}`);
+    }
+    next();
+}
+        
+module.exports.isAuthor =async (req, res, next) => {
+    const {id,reviewid} =req.params;
+    const review =await Review.findById(reviewid);
+    if (!review.author.equals(res.locals.currentUser._id)) {
+        req.flash("error", "You are not the author of this review!");
         return res.redirect(`/listings/${id}`);
     }
     next();

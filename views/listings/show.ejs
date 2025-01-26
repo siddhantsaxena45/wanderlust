@@ -26,18 +26,19 @@
             <p>
                <%= showlist.location %>
             </p>
-            <%# if( currentUser && currentUser._id.equals(showlist.owner._id)) {  %>
+            <% if( currentUser && showlist.owner._id.equals(currentUser._id)) {  %>
                <div class="buttons"><a href="/listings/<%= showlist._id %>/edit" class="btn btn-dark edit-btn">edit</a>
 
                   <form action="/listings/<%= showlist._id %>?_method=DELETE" method="post">
                      <button class="btn btn-dark">delete</button>
                   </form>
                </div>
-              <%#  }  %> 
+              <% }  %> 
 
          </div>
       </div>
    </div>
+   <% if(currentUser){ %>
    <hr class="col-8 offset-2">
    <div class="col-6 offset-3 mb-3">
       <h3>Leave a review</h3>
@@ -57,6 +58,7 @@
          <button type="submit" class="btn btn-dark edit-btn">Submit</button>
       </form>
    </div>
+   <% } %>
    <hr class="col-8 offset-2">
 
    <div class="col-8 offset-2 mb-3 ">
@@ -65,18 +67,23 @@
          <% for (const review of showlist.reviews) { %>
             <div class="col-8 offset-2 offset-md-0 col-md-6 mb-3">
                <div class="card">
-                  <div class="card-body p-2">
-                     <h5 class="card-title">User</h5>
-                     <h6 class="card-text">
-                        <%= review.rating %> stars
-                     </h6>
-                     <p class="card-text">
-                        <%= review.comment %>
-                     </p>
+                  <div class="card-body p-2 d-flex flex-column flex-md-row justify-content-between align-items-center">
+                   
+                     <div >
+                        <h5 class="card-title">@<%= review.author.username%></h5>
+                        <h6 class="card-text">
+                            <% for(let i=0; i<review.rating; i++){ %> <i class="fa-solid fa-star" style="color: #FFD43B;"></i> <% } %> <% for(let i=0; i<5-review.rating; i++){ %> <i class="far fa-star"></i> <% } %>
+                        </h6>
+                        <h6 class="card-text">
+                           <%= review.comment %>
+                        </h6>
+                     </div>
+                     
+                     <% if(currentUser && review.author._id.equals(currentUser._id)) {%>
                      <form action="/listings/<%=showlist._id%>/review/<%=review._id%>?_method=DELETE" method="POST">
                         <button class="btn btn-dark" type="submit">Delete</button>
                      </form>
-
+                     <% } %>
                   </div>
                </div>
             </div>
