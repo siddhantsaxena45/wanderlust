@@ -2,9 +2,11 @@ let burger = document.querySelector(".navbar-toggler");
 let navbar = document.querySelector(".navbar");
 let ul=document.querySelector(".collapse");
 burger.addEventListener("click", () => {
+   
     navbar.classList.toggle("expanded");
     ul.classList.toggle("flex-row");
 });
+
 (() => {
     'use strict'
   
