@@ -5,4 +5,4 @@ const privacyController = require("../controllers/privacy");
 
 
 router.route("/")
-    .get(wrapAsync(privacyController.index))
+    .get(wrapAsync(privacyController.privacy))
