@@ -50,9 +50,9 @@ app.set("views", path.join(__dirname, "views"));
 //     touchAfter: 24 * 3600
 // })
 
-mongoStore.on("error", function (e) {
-    console.log("session store error", e);
-})
+// mongoStore.on("error", function (e) {
+//     console.log("session store error", e);
+// })
 const sessionOptions = {
     // store:mongoStore,
     secret: process.env.SECRET,
