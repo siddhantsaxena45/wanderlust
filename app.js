@@ -14,7 +14,7 @@ const ExpressError = require("./utils/expressError");
 const userRouter = require("./routes/user");
 const reviewRouter = require("./routes/reviews");
 const listingRouter = require("./routes/listings");
-const privacyRouter = require("./routes/privacy");
+
 const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
@@ -86,7 +86,7 @@ app.use((req,res,next)=>{
 
 app.use("/",userRouter );
 app.use("/listings", listingRouter);
-app.use("/privacy", privacyRouter);
+
 app.use("/listings/:id/review", reviewRouter);
 
 app.all("*", (req, res, next) => {
