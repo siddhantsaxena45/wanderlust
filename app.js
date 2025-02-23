@@ -5,7 +5,7 @@ if(process.env.NODE_ENV !== "production"){
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const MongoStore = require('connect-mongo');
+// const MongoStore = require('connect-mongo');
 const path = require("path");
 const methodOverride = require('method-override');
 const ejsmate = require("ejs-mate");
@@ -41,20 +41,20 @@ app.engine('ejs', ejsmate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-const mongoStore = MongoStore.create({
-    mongoUrl: dburl,
-    crypto: {
-        secret: process.env.SECRET
-    },
+// const mongoStore = MongoStore.create({
+//     mongoUrl: dburl,
+//     crypto: {
+//         secret: process.env.SECRET
+//     },
 
-    touchAfter: 24 * 3600
-})
+//     touchAfter: 24 * 3600
+// })
 
 mongoStore.on("error", function (e) {
     console.log("session store error", e);
 })
 const sessionOptions = {
-    store:mongoStore,
+    // store:mongoStore,
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
