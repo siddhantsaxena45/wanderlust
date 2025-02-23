@@ -112,3 +112,11 @@ This project is licensed under the **MIT License**.
 
 **Enjoy using Wanderlust! 🌍✈️**
 
+## SCREENSHOTS
+![Wanderlust Screenshot 1](screenshots/image_1.png) 
+![Wanderlust Screenshot 2](screenshots/image_2.png) 
+![Wanderlust Screenshot 3](screenshots/image_3.png) 
+![Wanderlust Screenshot 4](screenshots/image_4.png) 
+![Wanderlust Screenshot 5](screenshots/image_5.png) 
+![Wanderlust Screenshot 6](screenshots/image_6.png) 
+![Wanderlust Screenshot 7](screenshots/image_7.png) 
