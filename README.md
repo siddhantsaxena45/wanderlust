@@ -1,6 +1,8 @@
 # Wanderlust
 
-Wanderlust is a web application that allows users to explore and book unique accommodations, including houses, rooms, castles, and camping spots. The project integrates a free map API (OpenStreetMap) and provides user authentication, reviews, and category-based filtering.
+Hosted on https://airbnb-clone-plv0.onrender.com
+
+Wanderlust is a web application that allows users to explore and book unique accommodations, including houses, rooms, castles, and camping spots. The project integrates a free map API (google maps) and provides user authentication, reviews, and category-based filtering.
 
 ## 🚀 Features
 - 🏠 **Browse Listings:** View various accommodations like houses, rooms, castles, and more.
