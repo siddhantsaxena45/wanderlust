@@ -14,6 +14,8 @@ const ExpressError = require("./utils/expressError");
 const userRouter = require("./routes/user");
 const reviewRouter = require("./routes/reviews");
 const listingRouter = require("./routes/listings");
+const privacyRoutes = require('./routes/privacy');
+const termsRoutes = require('./routes/terms');
 
 const session = require("express-session");
 const flash = require("connect-flash");
@@ -83,11 +85,12 @@ app.use((req,res,next)=>{
     res.locals.error=req.flash("error");
     next();
 })
-
+app.use(privacyRoutes);
+app.use(termsRoutes);
 app.use("/",userRouter );
 app.use("/listings", listingRouter);
-
 app.use("/listings/:id/review", reviewRouter);
+
 
 app.all("*", (req, res, next) => {
     next(new ExpressError(404, "page not found!"));
