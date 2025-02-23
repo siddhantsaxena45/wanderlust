@@ -85,6 +85,7 @@ app.use((req,res,next)=>{
 
 app.use("/",userRouter );
 app.use("/listings", listingRouter);
+app.use("/privacy", privacyRouter);
 app.use("/listings/:id/review", reviewRouter);
 
 app.all("*", (req, res, next) => {
